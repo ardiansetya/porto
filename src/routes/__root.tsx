@@ -1,4 +1,5 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import type { QueryClient } from '@tanstack/react-query'
 import {
   HeadContent,
   Scripts,
@@ -6,18 +7,16 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
-import Header from '../components/Header'
-
-import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-
-import appCss from '../styles.css?url'
-
-import type { QueryClient } from '@tanstack/react-query'
-
-import type { TRPCRouter } from '@/integrations/trpc/router'
 import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query'
+import { authMiddleware } from 'lib/middleware'
 
+import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
+import type { TRPCRouter } from '@/integrations/trpc/router'
+
+import Header from '../components/layout/Header'
+import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
+import appCss from '../styles.css?url'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -48,6 +47,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
 
   shellComponent: RootDocument,
+  server: {
+    middleware: [authMiddleware],
+  },
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -57,9 +59,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Header />
-        <Toaster/>
-        <main>{children}</main>{' '}
+        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+          <Header />
+          <Toaster />
+          <main>{children}</main>
+        </ThemeProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',

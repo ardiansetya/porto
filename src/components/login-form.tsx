@@ -17,9 +17,9 @@ import {
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { useForm } from '@tanstack/react-form'
-import { useNavigate } from '@tanstack/react-router'
-import { Link, redirect } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { authClient } from 'lib/auth-client'
+import { useEffect } from 'react'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
@@ -32,8 +32,15 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-
   const navigate = useNavigate()
+
+  const session = authClient.useSession()
+  useEffect(() => {
+    if (session.data) {
+      navigate({ to: '/' })
+    }
+  },[session])
+  
   const form = useForm({
     defaultValues: {
       email: '',
@@ -55,13 +62,16 @@ export function LoginForm({
             navigate({ to: '/' })
             toast.success('Loggin Successfully')
           },
-          onError: ({error}) => {
+          onError: ({ error }) => {
             toast.error(error.message)
-          }
+          },
         },
       )
     },
   })
+
+
+
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
@@ -147,7 +157,8 @@ export function LoginForm({
               <Field>
                 <Button type="submit">Login</Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account? <Link to='/register'>Sign up</Link>
+                  Don&apos;t have an account?{' '}
+                  <Link to="/register">Sign up</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>
