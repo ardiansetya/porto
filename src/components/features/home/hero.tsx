@@ -139,7 +139,7 @@ const techLogos = [
 
 export function Hero() {
   return (
-    <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden">
+    <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden px-12">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-soft" />

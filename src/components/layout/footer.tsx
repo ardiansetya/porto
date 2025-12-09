@@ -13,7 +13,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-border bg-background">
-      <div className="container mx-auto py-8 md:py-12">
+      <div className="container mx-auto py-8 md:py-12 px-12">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo & Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
