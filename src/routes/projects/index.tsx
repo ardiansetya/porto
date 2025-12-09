@@ -1,3 +1,6 @@
+import { CTASection } from '@/components/features/home/CTA-action'
+import { ProjectsGrid } from '@/components/features/projects/projects-grid'
+import { Layout } from '@/components/layout/layout'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/projects/')({
@@ -5,5 +8,10 @@ export const Route = createFileRoute('/projects/')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/projects/"!</div>
+  return (
+    <Layout>
+      <ProjectsGrid /> 
+      <CTASection />
+    </Layout>
+  )
 }
