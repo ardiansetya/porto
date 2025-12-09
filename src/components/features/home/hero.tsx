@@ -1,7 +1,5 @@
-import { Link } from '@tanstack/react-router'
-
 import { ArrowRight, Download } from 'lucide-react'
-
+import { Link } from '@tanstack/react-router'
 import { Button } from '@/components/ui/button'
 
 const techLogos = [
@@ -139,7 +137,7 @@ const techLogos = [
 
 export function Hero() {
   return (
-    <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden px-12">
+    <section className="relative min-h-[calc(100vh-5rem)] flex items-center overflow-hidden">
       {/* Background geometric shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl animate-pulse-soft" />
@@ -148,7 +146,7 @@ export function Hero() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] border border-border/20 rounded-full" />
       </div>
 
-      <div className="container mx-auto relative z-10">
+      <div className="container-custom relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Text Content */}
           <div className="order-2 lg:order-1">
@@ -163,7 +161,8 @@ export function Hero() {
 
             {/* Main headline */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up opacity-0">
-              Hi, I'm <span className="linear-text">Ardian Setya Pradana</span>
+              Hi, I'm{' '}
+              <span className="gradient-text">Ardian Setya Pradana</span>
               <br />
               <span className="text-foreground">Fullstack Developer.</span>
             </h1>

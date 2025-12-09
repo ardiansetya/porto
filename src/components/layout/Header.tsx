@@ -20,7 +20,7 @@ export default function Header() {
   const location = useLocation()
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
-      <nav className="container mx-auto px-12">
+      <nav className="container-custom mx-auto px-12">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link
