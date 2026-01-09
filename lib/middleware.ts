@@ -1,16 +1,28 @@
 import { redirect } from '@tanstack/react-router'
 import { createMiddleware } from '@tanstack/react-start'
+import { getRequestHeaders } from '@tanstack/react-start/server'
 
-import { auth } from './auth'
+import { authClient } from './auth-client'
 
 export const authMiddleware = createMiddleware().server(
-  async ({ next, request }) => {
-    const session = await auth.api.getSession({ headers: request.headers })
+  async ({ next }) => {
+    const headers = getRequestHeaders() as HeadersInit
+    const { data: session } = await authClient.getSession({
+      fetchOptions: { headers },
+    })
 
     if (!session) {
       throw redirect({ to: '/' })
     }
 
-    return await next()
+    return await next({
+      context: {
+        user: {
+          id: session.user.id,
+          name: session.user.name,
+          image: session.user.image,
+        },
+      },
+    })
   },
 )

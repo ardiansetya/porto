@@ -1,12 +1,35 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { getUser } from '@/server/userIdFn'
+import {
+  Link,
+  createFileRoute,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router'
+import { authClient } from 'lib/auth-client'
 import { authMiddleware } from 'lib/middleware'
-import { ExternalLink, Eye, EyeOff, Pencil, Plus } from 'lucide-react'
+import { ExternalLink, Eye, EyeOff, LogOut, Pencil, Plus } from 'lucide-react'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/dashboard/')({
   component: RouteComponent,
+  beforeLoad: async () => {
+    const userId = await getUser()
+
+    return {
+      userId,
+    }
+  },
+  loader: ({ context }) => {
+    if (!context.userId) {
+      throw redirect({ to: '/' })
+    }
+    return {
+      userId: context.userId,
+    }
+  },
   server: {
     middleware: [authMiddleware],
   },
@@ -26,6 +49,7 @@ const projects = [
 ]
 
 function RouteComponent() {
+  const navigate = useNavigate()
   return (
     <section className="min-h-[calc(100vh-5rem)] bg-background py-12">
       <div className="container-custom max-w-5xl space-y-10">
@@ -38,16 +62,32 @@ function RouteComponent() {
             </p>
           </div>
 
+          <Button
+            size="sm"
+            onClick={async () =>
+              await authClient.signOut({
+                fetchOptions: {
+                  onSuccess: () => {
+                    navigate({ to: '/' })
+                    toast.success('Logout Successfully')
+                  },
+                },
+              })
+            }
+          >
+            <LogOut className="w-4 h-4 mr-1" />
+            Logout
+          </Button>
+        </div>
+
+        {/* Project List */}
+        <div className="space-y-3">
           <Button asChild size="sm">
             <Link to="/dashboard/projects/new">
               <Plus className="w-4 h-4 mr-1" />
               New Project
             </Link>
           </Button>
-        </div>
-
-        {/* Project List */}
-        <div className="space-y-3">
           {projects.map((project) => (
             <Card key={project.id} className="border-muted/60">
               <CardHeader className="pb-2">
@@ -86,7 +126,7 @@ function RouteComponent() {
                 {/* Actions */}
                 <div className="flex items-center gap-1">
                   <Button size="icon" variant="ghost" asChild>
-                    <Link to='/dashboard/projects/edit'>
+                    <Link to="/dashboard/projects/edit">
                       <Pencil className="w-4 h-4" />
                     </Link>
                   </Button>
