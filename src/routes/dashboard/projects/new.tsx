@@ -13,12 +13,29 @@ import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
 import { createProjectSchema } from '@/schema/createProjectSchema'
+import { useMutation } from '@tanstack/react-query'
+import { useTRPC } from '@/integrations/trpc/react'
+import { toast } from 'sonner'
 
 export const Route = createFileRoute('/dashboard/projects/new')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+
+  const trpc = useTRPC()
+  const createProjects = useMutation({
+    ...trpc.projects.add.mutationOptions({
+      onSuccess: () => {
+        toast.success('Project berhasil ditambahkan')
+      },
+      onError: () => {
+        toast.error('Project gagal ditambahkan')
+      },
+    }),
+  })
+  
+
   const form = useForm({
     defaultValues: {
       title: '',
@@ -32,8 +49,7 @@ function RouteComponent() {
     },
     onSubmit: ({ value }) => {
       const parsed = createProjectSchema.parse(value)
-      console.log('SUBMIT', parsed)
-      // TODO: call tRPC / server action
+      createProjects.mutate(parsed)
     },
   })
 
