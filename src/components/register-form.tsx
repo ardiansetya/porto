@@ -19,7 +19,6 @@ import { cn } from '@/lib/utils'
 import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { authClient } from 'lib/auth-client'
-import { useEffect } from 'react'
 import { toast } from 'sonner'
 import * as z from 'zod'
 
@@ -33,16 +32,8 @@ export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
-
-  const session = authClient.useSession()
-    useEffect(() => {
-      if (session.data) {
-        navigate({ to: '/' })
-      }
-    },[session])
-    
-
   const navigate = useNavigate()
+
   const form = useForm({
     defaultValues: {
       name: '',
@@ -51,8 +42,6 @@ export function RegisterForm({
     },
     validators: {
       onSubmit: formSchema,
-      onChange: formSchema,
-      onBlur: formSchema,
     },
     onSubmit: async ({ value }) => {
       await authClient.signUp.email(
@@ -62,7 +51,8 @@ export function RegisterForm({
           password: value.password,
         },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
+            console.log(data)
             navigate({ to: '/login' })
             toast.success('Register Successfully')
           },

@@ -8,13 +8,11 @@ import {
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
 import type { TRPCOptionsProxy } from '@trpc/tanstack-react-query'
-import { authMiddleware } from 'lib/middleware'
 
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { Toaster } from '@/components/ui/sonner'
 import type { TRPCRouter } from '@/integrations/trpc/router'
 
-import Header from '../components/layout/Header'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 import appCss from '../styles.css?url'
 
@@ -47,9 +45,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   }),
 
   shellComponent: RootDocument,
-  server: {
-    middleware: [authMiddleware],
-  },
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
@@ -60,7 +55,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-          <Header />
           <Toaster />
           <main>{children}</main>
         </ThemeProvider>

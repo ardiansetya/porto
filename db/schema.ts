@@ -1,5 +1,5 @@
 import { relations } from 'drizzle-orm'
-import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
+import { boolean, index, integer, pgTable, serial, text, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 export const user = pgTable('user', {
   id: text('id').primaryKey(),
@@ -12,6 +12,23 @@ export const user = pgTable('user', {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+})
+export const projects = pgTable('projects', {
+  id: serial('id').primaryKey(),
+  title: varchar('title', { length: 255 }).notNull(),
+  slug: varchar('slug', { length: 255 }).notNull().unique(),
+  description: text('description').notNull(),
+  tags: text('tags').array().notNull().default([]),
+  projectUrl: varchar('project_url', { length: 512 }),
+  image: varchar('image', { length: 512 }),
+  published: boolean('published').notNull().default(false),
+  featured: boolean('featured').notNull().default(false),
+  createdAt: timestamp('created_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp('updated_at', { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 })
 
 export const session = pgTable(

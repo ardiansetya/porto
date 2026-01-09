@@ -1,27 +1,32 @@
-import { z } from 'zod'
+import { projects } from 'db/schema'
+import { createTRPCRouter, protectedProcedure, publicProcedure } from './init'
 
-import { createTRPCRouter, publicProcedure } from './init'
-
+import { createProjectSchema } from '@/schema/createProjectSchema'
 import type { TRPCRouterRecord } from '@trpc/server'
 
-const todos = [
-  { id: 1, name: 'Get groceries' },
-  { id: 2, name: 'Buy a new phone' },
-  { id: 3, name: 'Finish the project' },
-]
-
-const todosRouter = {
-  list: publicProcedure.query(() => todos),
-  add: publicProcedure
-    .input(z.object({ name: z.string() }))
-    .mutation(({ input }) => {
-      const newTodo = { id: todos.length + 1, name: input.name }
-      todos.push(newTodo)
-      return newTodo
+const projectsRouter = {
+  list: publicProcedure.query(({ ctx }) => {
+    return ctx.db.query.projects.findMany()
+  }),
+  add: protectedProcedure
+    .input(createProjectSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.insert(projects).values({
+        title: input.title,
+        slug: input.slug,
+        description: input.description,
+        tags: input.tags,
+        image: input.image,
+        projectUrl: input.projectUrl,
+        published: input.published,
+        featured: input.featured,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
     }),
 } satisfies TRPCRouterRecord
 
 export const trpcRouter = createTRPCRouter({
-  todos: todosRouter,
+  projects: projectsRouter,
 })
 export type TRPCRouter = typeof trpcRouter

@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite dev --port 3000",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run",

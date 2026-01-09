@@ -9,43 +9,60 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as RegisterIndexRouteImport } from './routes/register/index'
-import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
-import { Route as LoginIndexRouteImport } from './routes/login/index'
-import { Route as ContactIndexRouteImport } from './routes/contact/index'
-import { Route as AboutIndexRouteImport } from './routes/about/index'
+import { Route as AppRouteRouteImport } from './routes/_app/route'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as AppIndexRouteImport } from './routes/_app/index'
+import { Route as AppProjectsIndexRouteImport } from './routes/_app/projects/index'
+import { Route as AppLoginIndexRouteImport } from './routes/_app/login/index'
+import { Route as AppContactIndexRouteImport } from './routes/_app/contact/index'
+import { Route as AppAboutIndexRouteImport } from './routes/_app/about/index'
+import { Route as DashboardProjectsNewRouteImport } from './routes/dashboard/projects/new'
+import { Route as DashboardProjectsEditRouteImport } from './routes/dashboard/projects/edit'
 import { Route as ApiTrpcSplatRouteImport } from './routes/api.trpc.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
-const IndexRoute = IndexRouteImport.update({
+const AppRouteRoute = AppRouteRouteImport.update({
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/dashboard/',
+  path: '/dashboard/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const RegisterIndexRoute = RegisterIndexRouteImport.update({
-  id: '/register/',
-  path: '/register/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+const AppProjectsIndexRoute = AppProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const LoginIndexRoute = LoginIndexRouteImport.update({
+const AppLoginIndexRoute = AppLoginIndexRouteImport.update({
   id: '/login/',
   path: '/login/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const ContactIndexRoute = ContactIndexRouteImport.update({
+const AppContactIndexRoute = AppContactIndexRouteImport.update({
   id: '/contact/',
   path: '/contact/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AppRouteRoute,
 } as any)
-const AboutIndexRoute = AboutIndexRouteImport.update({
+const AppAboutIndexRoute = AppAboutIndexRouteImport.update({
   id: '/about/',
   path: '/about/',
+  getParentRoute: () => AppRouteRoute,
+} as any)
+const DashboardProjectsNewRoute = DashboardProjectsNewRouteImport.update({
+  id: '/dashboard/projects/new',
+  path: '/dashboard/projects/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardProjectsEditRoute = DashboardProjectsEditRouteImport.update({
+  id: '/dashboard/projects/edit',
+  path: '/dashboard/projects/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiTrpcSplatRoute = ApiTrpcSplatRouteImport.update({
@@ -60,122 +77,155 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutIndexRoute
-  '/contact': typeof ContactIndexRoute
-  '/login': typeof LoginIndexRoute
-  '/projects': typeof ProjectsIndexRoute
-  '/register': typeof RegisterIndexRoute
+  '/': typeof AppIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/dashboard/projects/edit': typeof DashboardProjectsEditRoute
+  '/dashboard/projects/new': typeof DashboardProjectsNewRoute
+  '/about': typeof AppAboutIndexRoute
+  '/contact': typeof AppContactIndexRoute
+  '/login': typeof AppLoginIndexRoute
+  '/projects': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutIndexRoute
-  '/contact': typeof ContactIndexRoute
-  '/login': typeof LoginIndexRoute
-  '/projects': typeof ProjectsIndexRoute
-  '/register': typeof RegisterIndexRoute
+  '/': typeof AppIndexRoute
+  '/dashboard': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/dashboard/projects/edit': typeof DashboardProjectsEditRoute
+  '/dashboard/projects/new': typeof DashboardProjectsNewRoute
+  '/about': typeof AppAboutIndexRoute
+  '/contact': typeof AppContactIndexRoute
+  '/login': typeof AppLoginIndexRoute
+  '/projects': typeof AppProjectsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about/': typeof AboutIndexRoute
-  '/contact/': typeof ContactIndexRoute
-  '/login/': typeof LoginIndexRoute
-  '/projects/': typeof ProjectsIndexRoute
-  '/register/': typeof RegisterIndexRoute
+  '/_app': typeof AppRouteRouteWithChildren
+  '/_app/': typeof AppIndexRoute
+  '/dashboard/': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/trpc/$': typeof ApiTrpcSplatRoute
+  '/dashboard/projects/edit': typeof DashboardProjectsEditRoute
+  '/dashboard/projects/new': typeof DashboardProjectsNewRoute
+  '/_app/about/': typeof AppAboutIndexRoute
+  '/_app/contact/': typeof AppContactIndexRoute
+  '/_app/login/': typeof AppLoginIndexRoute
+  '/_app/projects/': typeof AppProjectsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dashboard'
+    | '/api/auth/$'
+    | '/api/trpc/$'
+    | '/dashboard/projects/edit'
+    | '/dashboard/projects/new'
     | '/about'
     | '/contact'
     | '/login'
     | '/projects'
-    | '/register'
-    | '/api/auth/$'
-    | '/api/trpc/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/dashboard'
+    | '/api/auth/$'
+    | '/api/trpc/$'
+    | '/dashboard/projects/edit'
+    | '/dashboard/projects/new'
     | '/about'
     | '/contact'
     | '/login'
     | '/projects'
-    | '/register'
-    | '/api/auth/$'
-    | '/api/trpc/$'
   id:
     | '__root__'
-    | '/'
-    | '/about/'
-    | '/contact/'
-    | '/login/'
-    | '/projects/'
-    | '/register/'
+    | '/_app'
+    | '/_app/'
+    | '/dashboard/'
     | '/api/auth/$'
     | '/api/trpc/$'
+    | '/dashboard/projects/edit'
+    | '/dashboard/projects/new'
+    | '/_app/about/'
+    | '/_app/contact/'
+    | '/_app/login/'
+    | '/_app/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutIndexRoute: typeof AboutIndexRoute
-  ContactIndexRoute: typeof ContactIndexRoute
-  LoginIndexRoute: typeof LoginIndexRoute
-  ProjectsIndexRoute: typeof ProjectsIndexRoute
-  RegisterIndexRoute: typeof RegisterIndexRoute
+  AppRouteRoute: typeof AppRouteRouteWithChildren
+  DashboardIndexRoute: typeof DashboardIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
+  DashboardProjectsEditRoute: typeof DashboardProjectsEditRoute
+  DashboardProjectsNewRoute: typeof DashboardProjectsNewRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/register/': {
-      id: '/register/'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/': {
-      id: '/projects/'
+    '/_app/projects/': {
+      id: '/_app/projects/'
       path: '/projects'
       fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppProjectsIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/login/': {
-      id: '/login/'
+    '/_app/login/': {
+      id: '/_app/login/'
       path: '/login'
       fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppLoginIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/contact/': {
-      id: '/contact/'
+    '/_app/contact/': {
+      id: '/_app/contact/'
       path: '/contact'
       fullPath: '/contact'
-      preLoaderRoute: typeof ContactIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AppContactIndexRouteImport
+      parentRoute: typeof AppRouteRoute
     }
-    '/about/': {
-      id: '/about/'
+    '/_app/about/': {
+      id: '/_app/about/'
       path: '/about'
       fullPath: '/about'
-      preLoaderRoute: typeof AboutIndexRouteImport
+      preLoaderRoute: typeof AppAboutIndexRouteImport
+      parentRoute: typeof AppRouteRoute
+    }
+    '/dashboard/projects/new': {
+      id: '/dashboard/projects/new'
+      path: '/dashboard/projects/new'
+      fullPath: '/dashboard/projects/new'
+      preLoaderRoute: typeof DashboardProjectsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/projects/edit': {
+      id: '/dashboard/projects/edit'
+      path: '/dashboard/projects/edit'
+      fullPath: '/dashboard/projects/edit'
+      preLoaderRoute: typeof DashboardProjectsEditRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/trpc/$': {
@@ -195,15 +245,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppRouteRouteChildren {
+  AppIndexRoute: typeof AppIndexRoute
+  AppAboutIndexRoute: typeof AppAboutIndexRoute
+  AppContactIndexRoute: typeof AppContactIndexRoute
+  AppLoginIndexRoute: typeof AppLoginIndexRoute
+  AppProjectsIndexRoute: typeof AppProjectsIndexRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppIndexRoute: AppIndexRoute,
+  AppAboutIndexRoute: AppAboutIndexRoute,
+  AppContactIndexRoute: AppContactIndexRoute,
+  AppLoginIndexRoute: AppLoginIndexRoute,
+  AppProjectsIndexRoute: AppProjectsIndexRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutIndexRoute: AboutIndexRoute,
-  ContactIndexRoute: ContactIndexRoute,
-  LoginIndexRoute: LoginIndexRoute,
-  ProjectsIndexRoute: ProjectsIndexRoute,
-  RegisterIndexRoute: RegisterIndexRoute,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  DashboardIndexRoute: DashboardIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,
+  DashboardProjectsEditRoute: DashboardProjectsEditRoute,
+  DashboardProjectsNewRoute: DashboardProjectsNewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

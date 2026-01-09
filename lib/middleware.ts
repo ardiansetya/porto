@@ -8,7 +8,7 @@ export const authMiddleware = createMiddleware().server(
     const session = await auth.api.getSession({ headers: request.headers })
 
     if (!session) {
-      throw redirect({ to: '/login' })
+      throw redirect({ to: '/' })
     }
 
     return await next()

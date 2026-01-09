@@ -1,64 +1,15 @@
 import { Button } from '@/components/ui/button'
+import { useTRPC } from '@/integrations/trpc/react'
+import { useQuery } from '@tanstack/react-query'
 import { ExternalLink, Github } from 'lucide-react'
 
-const projects = [
-  {
-    id: 1,
-    title: 'TruckTracker Mobile App',
-    description:
-      'Real-time fleet management and tracking solution with GPS integration, driver analytics, and route optimization. Built for logistics companies to streamline their operations.',
-    tags: ['React Native', 'Node.js', 'PostgreSQL', 'Maps API', 'Socket.io'],
-    image: '/placeholder.svg',
-    featured: true,
-  },
-  {
-    id: 2,
-    title: 'Disaster Reporting System',
-    description:
-      'Community-driven platform for reporting and managing natural disaster incidents in real-time. Features include geolocation, image uploads, and emergency notifications.',
-    tags: ['React', 'Spring Boot', 'MySQL', 'WebSocket', 'Google Maps'],
-    image: '/placeholder.svg',
-    featured: true,
-  },
-  {
-    id: 3,
-    title: 'DiaCheck — Diabetes Detection',
-    description:
-      'AI-powered early diabetes detection application using machine learning algorithms. Provides risk assessment based on user health data and lifestyle factors.',
-    tags: ['Next.js', 'Python', 'TensorFlow', 'FastAPI', 'PostgreSQL'],
-    image: '/placeholder.svg',
-    featured: true,
-  },
-  {
-    id: 4,
-    title: 'Personal Finance Dashboard',
-    description:
-      'Comprehensive financial management tool with expense tracking, budget planning, and visual analytics. Supports multiple currencies and bank integrations.',
-    tags: ['React', 'Node.js', 'MongoDB', 'Chart.js', 'Plaid API'],
-    image: '/placeholder.svg',
-    featured: false,
-  },
-  {
-    id: 5,
-    title: 'E-Commerce Platform',
-    description:
-      'Full-featured online store with product management, shopping cart, payment processing, and order tracking. Built with scalability in mind.',
-    tags: ['Next.js', 'Prisma', 'PostgreSQL', 'Stripe', 'Redis'],
-    image: '/placeholder.svg',
-    featured: false,
-  },
-  {
-    id: 6,
-    title: 'Task Management System',
-    description:
-      'Collaborative project management tool with kanban boards, team assignments, deadlines, and progress tracking. Real-time updates across all team members.',
-    tags: ['React', 'Express', 'MongoDB', 'Socket.io', 'Docker'],
-    image: '/placeholder.svg',
-    featured: false,
-  },
-]
+
 
 export function ProjectsGrid() {
+  const trpc = useTRPC()
+  const {data: projects} = useQuery({
+    ...trpc.projects.list.queryOptions()
+  })
   return (
     <section className="section-padding">
       <div className="container-custom">
@@ -75,7 +26,7 @@ export function ProjectsGrid() {
 
         {/* Projects grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
+          {projects?.map((project, index) => (
             <article
               key={project.id}
               className="group rounded-2xl bg-card border border-border overflow-hidden hover-lift"
@@ -84,7 +35,7 @@ export function ProjectsGrid() {
               {/* Project image */}
               <div className="relative aspect-video bg-secondary overflow-hidden">
                 <img
-                  src={project.image}
+                  src={project.image ?? ""}
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

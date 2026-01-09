@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 
 import { ModeToggle } from '../shared/mode-toggle'
 import { Button } from '../ui/button'
+import { authClient } from 'lib/auth-client'
 
 const navLinks = [
   { name: 'Home', path: '/' },
@@ -18,6 +19,8 @@ const navLinks = [
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
+
+  const {data: user} = authClient.useSession()
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <nav className="container-custom mx-auto px-12">
@@ -50,6 +53,18 @@ export default function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-4">
+            {user ? (
+              <Link
+                to="/dashboard"
+                className="text-sm font-medium transition-colors link-underline"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <Button asChild>
+                <Link to="/login">Login</Link>
+              </Button>
+            )}
             <ModeToggle />
             {/* Mobile Menu Button */}
             <Button

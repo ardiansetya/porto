@@ -35,12 +35,13 @@ export function LoginForm({
   const navigate = useNavigate()
 
   const session = authClient.useSession()
+
   useEffect(() => {
     if (session.data) {
       navigate({ to: '/' })
     }
-  },[session])
-  
+  }, [session.data])
+
   const form = useForm({
     defaultValues: {
       email: '',
@@ -56,6 +57,7 @@ export function LoginForm({
         {
           email: value.email,
           password: value.password,
+          callbackURL:'/dashboard'
         },
         {
           onSuccess: () => {
@@ -69,8 +71,6 @@ export function LoginForm({
       )
     },
   })
-
-
 
   return (
     <div className={cn('flex flex-col gap-6', className)} {...props}>
@@ -156,10 +156,6 @@ export function LoginForm({
 
               <Field>
                 <Button type="submit">Login</Button>
-                <FieldDescription className="text-center">
-                  Don&apos;t have an account?{' '}
-                  <Link to="/register">Sign up</Link>
-                </FieldDescription>
               </Field>
             </FieldGroup>
           </form>
