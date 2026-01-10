@@ -1,7 +1,9 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { useTRPC } from '@/integrations/trpc/react'
 import { getUser } from '@/server/userIdFn'
+import { useQuery } from '@tanstack/react-query'
 import {
   Link,
   createFileRoute,
@@ -10,7 +12,7 @@ import {
 } from '@tanstack/react-router'
 import { authClient } from 'lib/auth-client'
 import { authMiddleware } from 'lib/middleware'
-import { ExternalLink, Eye, EyeOff, LogOut, Pencil, Plus } from 'lucide-react'
+import { ExternalLink, Eye, EyeOff, Image, LogOut, Pencil, Plus } from 'lucide-react'
 import { toast } from 'sonner'
 
 export const Route = createFileRoute('/dashboard/')({
@@ -35,21 +37,13 @@ export const Route = createFileRoute('/dashboard/')({
   },
 })
 
-const projects = [
-  {
-    id: 6,
-    title: 'Task Management System',
-    description:
-      'Collaborative project management tool with kanban boards, team assignments, deadlines, and progress tracking.',
-    tags: ['React', 'Express', 'MongoDB', 'Socket.io', 'Docker'],
-    published: true,
-    featured: true,
-    link: '#',
-  },
-]
-
 function RouteComponent() {
   const navigate = useNavigate()
+
+  const trpc = useTRPC()
+    const {data: projects} = useQuery({
+      ...trpc.projects.list.queryOptions()
+    })
   return (
     <section className="min-h-[calc(100vh-5rem)] bg-background py-12">
       <div className="container-custom max-w-5xl space-y-10">
@@ -82,13 +76,13 @@ function RouteComponent() {
 
         {/* Project List */}
         <div className="space-y-3">
-          <Button asChild size="sm">
+          <Button asChild size="default" variant={'secondary'}>
             <Link to="/dashboard/projects/new">
               <Plus className="w-4 h-4 mr-1" />
               New Project
             </Link>
           </Button>
-          {projects.map((project) => (
+          {projects?.map((project) => (
             <Card key={project.id} className="border-muted/60">
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between gap-4">
@@ -126,6 +120,14 @@ function RouteComponent() {
                 {/* Actions */}
                 <div className="flex items-center gap-1">
                   <Button size="icon" variant="ghost" asChild>
+                    <Link
+                      to="/dashboard/projects/upload/$projectid"
+                      params={{ projectid: String(project.id) }}
+                    >
+                      <Image className="w-4 h-4" />
+                    </Link>
+                  </Button>
+                  <Button size="icon" variant="ghost" asChild>
                     <Link to="/dashboard/projects/edit">
                       <Pencil className="w-4 h-4" />
                     </Link>
@@ -140,13 +142,13 @@ function RouteComponent() {
                   </Button>
 
                   <Button size="icon" variant="ghost" asChild>
-                    <a
-                      href={project.link}
+                    <Link
+                      to={project.projectUrl || '/'}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
                       <ExternalLink className="w-4 h-4" />
-                    </a>
+                    </Link>
                   </Button>
                 </div>
               </CardContent>

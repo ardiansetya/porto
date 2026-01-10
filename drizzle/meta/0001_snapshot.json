@@ -1,6 +1,6 @@
 {
-  "id": "adbc9e61-2210-4d31-aaef-440588c5b5de",
-  "prevId": "40e5d40d-7f06-4bf6-a3df-0ece67a1297e",
+  "id": "89198199-1d2c-48a2-af9d-8ba3fef057a9",
+  "prevId": "9967c1ef-8d5c-407d-a19d-f4530dd2101e",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -161,9 +161,15 @@
           "notNull": true,
           "default": "'{}'"
         },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
         "project_url": {
           "name": "project_url",
-          "type": "varchar(512)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
@@ -180,13 +186,6 @@
           "primaryKey": false,
           "notNull": true,
           "default": false
-        },
-        "order": {
-          "name": "order",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true,
-          "default": 0
         },
         "created_at": {
           "name": "created_at",

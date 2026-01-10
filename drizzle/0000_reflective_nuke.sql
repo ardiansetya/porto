@@ -14,6 +14,20 @@ CREATE TABLE "account" (
 	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "projects" (
+	"id" serial PRIMARY KEY NOT NULL,
+	"title" varchar(255) NOT NULL,
+	"slug" varchar(255) NOT NULL,
+	"description" text NOT NULL,
+	"tags" text[] DEFAULT '{}' NOT NULL,
+	"image_url" text,
+	"published" boolean DEFAULT false NOT NULL,
+	"featured" boolean DEFAULT false NOT NULL,
+	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
+	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+	CONSTRAINT "projects_slug_unique" UNIQUE("slug")
+);
+--> statement-breakpoint
 CREATE TABLE "session" (
 	"id" text PRIMARY KEY NOT NULL,
 	"expires_at" timestamp NOT NULL,

@@ -1,5 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -12,29 +12,52 @@ import {
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
-import { createProjectSchema } from '@/schema/createProjectSchema'
-import { useMutation } from '@tanstack/react-query'
 import { useTRPC } from '@/integrations/trpc/react'
+import { createProjectSchema } from '@/schema/createProjectSchema'
+import { getUser } from '@/server/userIdFn'
+import { useMutation } from '@tanstack/react-query'
+import { authMiddleware } from 'lib/middleware'
 import { toast } from 'sonner'
 
 export const Route = createFileRoute('/dashboard/projects/new')({
   component: RouteComponent,
+  beforeLoad: async () => {
+    const userId = await getUser()
+
+    return {
+      userId,
+    }
+  },
+  loader: ({ context }) => {
+    if (!context.userId) {
+      throw redirect({ to: '/' })
+    }
+    return {
+      userId: context.userId,
+    }
+  },
+  server: {
+    middleware: [authMiddleware],
+  },
 })
 
 function RouteComponent() {
-
+  const navigate = useNavigate()
   const trpc = useTRPC()
   const createProjects = useMutation({
     ...trpc.projects.add.mutationOptions({
       onSuccess: () => {
+        form.reset()
+        navigate({ to: '/dashboard' })
         toast.success('Project berhasil ditambahkan')
       },
-      onError: () => {
-        toast.error('Project gagal ditambahkan')
+      onError: (error) => {
+        toast.error('Project gagal ditambahkan', {
+          description: error.message,
+        })
       },
     }),
   })
-  
 
   const form = useForm({
     defaultValues: {
@@ -42,12 +65,12 @@ function RouteComponent() {
       slug: '',
       description: '',
       tags: [''],
-      projectUrl: '',
       image: '',
       published: false,
       featured: false,
     },
     onSubmit: ({ value }) => {
+      console.log(value)
       const parsed = createProjectSchema.parse(value)
       createProjects.mutate(parsed)
     },
@@ -96,7 +119,6 @@ function RouteComponent() {
                     )
                   }}
                 </form.Field>
-
                 {/* slug */}
                 <form.Field name="slug">
                   {(field) => {
@@ -119,7 +141,6 @@ function RouteComponent() {
                     )
                   }}
                 </form.Field>
-
                 {/* Description */}
                 <form.Field name="description">
                   {(field) => {
@@ -142,7 +163,6 @@ function RouteComponent() {
                     )
                   }}
                 </form.Field>
-
                 {/* Tech Stack (ARRAY) */}
                 <form.Field name="tags" mode="array">
                   {(field) => (
@@ -188,32 +208,18 @@ function RouteComponent() {
                   )}
                 </form.Field>
 
-                {/* Project URL */}
-                <form.Field name="projectUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>Project URL</FieldLabel>
-                      <Input
-                        value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                      />
-                    </Field>
-                  )}
-                </form.Field>
-
-                {/* Image */}
+                {/* Image
                 <form.Field name="image">
                   {(field) => (
                     <Field>
-                      <FieldLabel>Image URL</FieldLabel>
-                      <Input
+                      <FieldLabel>Project Image</FieldLabel>
+                      <ImageUpload
                         value={field.state.value}
-                        onChange={(e) => field.handleChange(e.target.value)}
+                        onChange={field.handleChange}
                       />
                     </Field>
                   )}
-                </form.Field>
-
+                </form.Field> */}
                 {/* Flags */}
                 <Field>
                   <div className="flex justify-between">

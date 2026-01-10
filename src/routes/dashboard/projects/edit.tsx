@@ -1,13 +1,33 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
+import { authMiddleware } from 'lib/middleware'
+import { getUser } from '@/server/userIdFn'
 
 export const Route = createFileRoute('/dashboard/projects/edit')({
   component: RouteComponent,
+   beforeLoad: async () => {
+      const userId = await getUser()
+  
+      return {
+        userId,
+      }
+    },
+    loader: ({ context }) => {
+      if (!context.userId) {
+        throw redirect({ to: '/' })
+      }
+      return {
+        userId: context.userId,
+      }
+    },
+    server: {
+      middleware: [authMiddleware],
+    },
 })
 
 function RouteComponent() {
