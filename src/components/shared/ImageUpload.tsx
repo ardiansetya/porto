@@ -7,9 +7,7 @@ import { X } from 'lucide-react'
 import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 
-
-
-export function ImageUpload() {
+export function ImageUpload({ projectId }: { projectId: string }) {
   const [progress, setProgress] = useState(0)
   const [file, setFile] = useState<File | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
@@ -26,16 +24,14 @@ export function ImageUpload() {
 
   const { startUpload, isUploading } = useUploadThing('imageUploader', {
     onClientUploadComplete: (res) => {
-        const uploadedFile = res[0]
-        if (!uploadedFile.ufsUrl) return
+      const uploadedFile = res[0]
+      if (!uploadedFile.ufsUrl) return
 
-
-        setFile(null)
-        setPreview(uploadedFile.ufsUrl)
-        setProgress(0)
-
+      setFile(null)
+      setPreview(uploadedFile.ufsUrl)
+      setProgress(0)
     },
-    onUploadProgress: setProgress
+    onUploadProgress: setProgress,
   })
 
   return (
@@ -89,7 +85,7 @@ export function ImageUpload() {
         <Button
           className="w-full"
           onClick={() => {
-            startUpload([file])
+            startUpload([file], {projectId})
           }}
           disabled={isUploading}
         >

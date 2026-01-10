@@ -24,7 +24,7 @@ export const user = pgTable('user', {
 })
 
 export const projects = pgTable('projects', {
-  id: serial('id').primaryKey(),
+  id: text('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   description: text('description').notNull(),

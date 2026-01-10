@@ -1,39 +1,42 @@
+import { db } from 'db/drizzle'
+import { projects } from 'db/schema'
+import { eq } from 'drizzle-orm'
 import { auth } from 'lib/auth'
 import type { FileRouter } from 'uploadthing/server'
 import { UploadThingError, createUploadthing } from 'uploadthing/server'
+import z from 'zod'
 
 const f = createUploadthing()
 
-// FileRouter for your app, can contain multiple FileRoutes
 export const uploadRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
   imageUploader: f({
     image: {
-      /**
-       * For full list of options and defaults, see the File Route API reference
-       * @see https://docs.uploadthing.com/file-routes#route-config
-       */
       maxFileSize: '4MB',
       maxFileCount: 1,
     },
   })
-    // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
+    .input(
+      z.object({
+        projectId: z.string(),
+      }),
+    )
+    .middleware(async ({ req, input }) => {
       console.log('Upload middleware hit')
 
-      // This code runs on your server before upload
       const user = await auth.api.getSession({ headers: req.headers })
-      // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError('Unauthorized')
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { userId: user.user.id }
+      return { userId: user.user.id, projectId: input.projectId }
     })
-    .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
+    .onUploadComplete(async ({ metadata, file, }) => {
       console.log('Upload complete for userId:', metadata.userId)
 
       console.log('file url', file.ufsUrl)
+
+      await db
+        .update(projects)
+        .set({ imageUrl: file.ufsUrl })
+        .where(eq(projects.id, metadata.projectId))
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId }
