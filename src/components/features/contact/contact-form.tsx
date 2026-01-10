@@ -8,13 +8,13 @@ const contactInfo = [
   {
     icon: Mail,
     label: 'Email',
-    value: 'ardian@example.com',
-    href: 'mailto:ardian@example.com',
+    value: 'ardiansetya123@gmail.com',
+    href: 'https://mail.google.com/mail/?view=cm&fs=1&tf=1&to={{ardiansetya123@gmail.com}}&su=Subject&body=Body%20Text',
   },
   {
     icon: Github,
     label: 'GitHub',
-    value: 'github.com/ardian',
+    value: 'github.com/ardiansetya',
     href: 'https://github.com',
   },
   {
