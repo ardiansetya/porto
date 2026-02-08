@@ -5,10 +5,10 @@ import { useTRPC } from '@/integrations/trpc/react'
 import { getUser } from '@/server/userIdFn'
 import { useQuery } from '@tanstack/react-query'
 import {
-  Link,
-  createFileRoute,
-  redirect,
-  useNavigate,
+    Link,
+    createFileRoute,
+    redirect,
+    useNavigate,
 } from '@tanstack/react-router'
 import { authClient } from 'lib/auth-client'
 import { authMiddleware } from 'lib/middleware'
@@ -128,7 +128,10 @@ function RouteComponent() {
                     </Link>
                   </Button>
                   <Button size="icon" variant="ghost" asChild>
-                    <Link to="/dashboard/projects/edit">
+                    <Link 
+                      to="/dashboard/projects/edit"
+                      search={{ id: String(project.id) }}
+                    >
                       <Pencil className="w-4 h-4" />
                     </Link>
                   </Button>

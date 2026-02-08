@@ -1,13 +1,14 @@
 import { useForm } from '@tanstack/react-form'
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 
+import { ImageUploadField } from '@/components/shared/ImageUploadField'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
+    Field,
+    FieldError,
+    FieldGroup,
+    FieldLabel,
 } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
@@ -208,18 +209,26 @@ function RouteComponent() {
                   )}
                 </form.Field>
 
-                {/* Image
+                {/* Image */}
                 <form.Field name="image">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>Project Image</FieldLabel>
-                      <ImageUpload
-                        value={field.state.value}
-                        onChange={field.handleChange}
-                      />
-                    </Field>
-                  )}
-                </form.Field> */}
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid
+
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel>Project Image</FieldLabel>
+                        <ImageUploadField
+                          value={field.state.value}
+                          onChange={field.handleChange}
+                        />
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    )
+                  }}
+                </form.Field>
                 {/* Flags */}
                 <Field>
                   <div className="flex justify-between">
