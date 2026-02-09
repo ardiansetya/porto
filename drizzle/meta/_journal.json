@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1768024837675,
-      "tag": "0000_reflective_nuke",
+      "when": 1770611932240,
+      "tag": "0000_unknown_siren",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1768029069837,
-      "tag": "0001_orange_celestials",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1768034859617,
-      "tag": "0002_lethal_marvel_zombies",
+      "when": 1770612820490,
+      "tag": "0001_next_sunspot",
       "breakpoints": true
     }
   ]

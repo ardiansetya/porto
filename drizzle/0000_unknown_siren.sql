@@ -14,13 +14,24 @@ CREATE TABLE "account" (
 	"updated_at" timestamp NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "image" (
+	"id" text PRIMARY KEY NOT NULL,
+	"project_id" text NOT NULL,
+	"name" text NOT NULL,
+	"url" text NOT NULL,
+	"file_type" text NOT NULL,
+	"file_size" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "projects" (
-	"id" serial PRIMARY KEY NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
 	"title" varchar(255) NOT NULL,
 	"slug" varchar(255) NOT NULL,
 	"description" text NOT NULL,
 	"tags" text[] DEFAULT '{}' NOT NULL,
-	"image_url" text,
+	"project_url" text,
 	"published" boolean DEFAULT false NOT NULL,
 	"featured" boolean DEFAULT false NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
@@ -45,7 +56,6 @@ CREATE TABLE "user" (
 	"name" text NOT NULL,
 	"email" text NOT NULL,
 	"email_verified" boolean DEFAULT false NOT NULL,
-	"image" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL,
 	CONSTRAINT "user_email_unique" UNIQUE("email")
@@ -61,6 +71,7 @@ CREATE TABLE "verification" (
 );
 --> statement-breakpoint
 ALTER TABLE "account" ADD CONSTRAINT "account_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "image" ADD CONSTRAINT "image_project_id_projects_id_fk" FOREIGN KEY ("project_id") REFERENCES "public"."projects"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "session" ADD CONSTRAINT "session_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "account_userId_idx" ON "account" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX "session_userId_idx" ON "session" USING btree ("user_id");--> statement-breakpoint

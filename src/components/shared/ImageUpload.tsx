@@ -1,11 +1,15 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
-import { useUploadThing } from '@/lib/uploadthing'
 import { cn } from '@/lib/utils'
+import type { UploadRouter } from '@/server/uploadthing'
+import { useUploadThing } from '@/utils/uploadthing'
+import { UploadButton } from '@uploadthing/react'
 import { X } from 'lucide-react'
 import { useState } from 'react'
 import { useDropzone } from 'react-dropzone'
+
+
 
 export function ImageUpload({ projectId }: { projectId: string }) {
   const [progress, setProgress] = useState(0)
@@ -16,23 +20,56 @@ export function ImageUpload({ projectId }: { projectId: string }) {
     accept: { 'image/*': [] },
     onDrop: (files) => {
       const f = files[0]
-      console.log(files)
+      console.log(files, projectId)
       setPreview(URL.createObjectURL(f))
       setFile(f)
     },
   })
 
-  const { startUpload, isUploading } = useUploadThing('imageUploader', {
-    onClientUploadComplete: (res) => {
-      const uploadedFile = res[0]
-      if (!uploadedFile.ufsUrl) return
+  // const { startUpload, isUploading } = useUploadThing('imageUploader', {
+  //   onClientUploadComplete: (res) => {
+  //     const uploadedFile = res[0]
+  //     if (!uploadedFile.ufsUrl) return
 
-      setFile(null)
-      setPreview(uploadedFile.ufsUrl)
-      setProgress(0)
-    },
-    onUploadProgress: setProgress,
-  })
+  //     setFile(null)
+  //     setPreview(uploadedFile.ufsUrl)
+  //     setProgress(0)
+  //   },
+  //   onUploadError(e) {
+  //     console.error('Upload error:', e)
+  //   },
+  //   onUploadProgress: setProgress,
+  // })
+
+  const { startUpload, isUploading } = useUploadThing('imageUploader', {
+  onClientUploadComplete: (res) => {
+    console.log('Upload response:', res)
+    const uploadedFile = res[0]
+    
+    if (!uploadedFile.ufsUrl) {
+      console.error('No URL in response')
+      return
+    }
+
+    setFile(null)
+    setPreview(uploadedFile.ufsUrl)
+    setProgress(0)
+  },
+  onUploadError(e) {
+    console.error('Upload error:', e)
+    alert(`Upload failed: ${e.message}`)
+    setProgress(0)
+  },
+  onUploadProgress: (p) => {
+    console.log('Progress:', p)
+    setProgress(p)
+  },
+})
+
+  const handleUpload = () => {
+    if (!file) return
+    startUpload([file])
+  }
 
   return (
     <div className="space-y-3">
@@ -85,7 +122,7 @@ export function ImageUpload({ projectId }: { projectId: string }) {
         <Button
           className="w-full"
           onClick={() => {
-            startUpload([file], {projectId})
+            handleUpload()
           }}
           disabled={isUploading}
         >
@@ -102,6 +139,29 @@ export function ImageUpload({ projectId }: { projectId: string }) {
           </p>
         </div>
       )}
+
+      <UploadButton<UploadRouter, "imageUploader">
+    endpoint="imageUploader"
+    onClientUploadComplete={(res) => {
+      // Do something with the response
+      console.log("Files: ", res);
+      alert("Upload Completed");
+    }}
+    onUploadError={(error: Error) => {
+      // Do something with the error.
+      alert(`ERROR! ${error.message}`);
+    }}
+    onBeforeUploadBegin={(files) => {
+      // Preprocess files before uploading (e.g. rename them)
+      return files.map(
+        (f) => new File([f], "renamed-" + f.name, { type: f.type }),
+      );
+    }}
+    onUploadBegin={(name) => {
+      // Do something once upload begins
+      console.log("Uploading: ", name);
+    }}
+  />
     </div>
   )
 }

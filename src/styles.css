@@ -225,11 +225,11 @@ code {
 
 /* Marquee - memastikan looping sempurna */
 @keyframes marquee {
-  0% {
-    transform: translate3d(0, 0, 0);
+  from {
+    transform: translateX(0);
   }
-  100% {
-    transform: translate3d(-50%, 0, 0);
+  to {
+    transform: translateX(-50%);
   }
 }
 
@@ -252,9 +252,11 @@ code {
   
   /* Marquee animation */
   .animate-marquee {
-    animation: marquee 25s linear infinite;
-    -webkit-animation: marquee 25s linear infinite;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+   backface-visibility: hidden;
 }
+
   
   .animate-marquee:hover {
     animation-play-state: paused;

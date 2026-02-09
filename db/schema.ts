@@ -4,7 +4,6 @@ import {
   index,
   integer,
   pgTable,
-  serial,
   text,
   timestamp,
   varchar,
@@ -14,8 +13,8 @@ export const user = pgTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
-  emailVerified: boolean('email_verified').default(false).notNull(),
   image: text('image'),
+  emailVerified: boolean('email_verified').default(false).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at')
     .defaultNow()
@@ -23,13 +22,32 @@ export const user = pgTable('user', {
     .notNull(),
 })
 
+export const image = pgTable('image', {
+  id: text('id').primaryKey(),
+
+  projectId: text('project_id')
+    .notNull()
+    .references(() => projects.id, { onDelete: 'cascade' }),
+
+  name: text('name').notNull(),
+  url: text('url').notNull(),
+  fileType: text('file_type').notNull(),
+  fileSize: integer('file_size').notNull(),
+
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+})
+
+
 export const projects = pgTable('projects', {
   id: text('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   slug: varchar('slug', { length: 255 }).notNull().unique(),
   description: text('description').notNull(),
   tags: text('tags').array().notNull().default([]),
-  imageUrl: text('image_url'),
   projectUrl: text('project_url'),
   published: boolean('published').notNull().default(false),
   featured: boolean('featured').notNull().default(false),
@@ -104,6 +122,19 @@ export const userRelations = relations(user, ({ many }) => ({
   sessions: many(session),
   accounts: many(account),
 }))
+
+
+export const projectRelations = relations(projects, ({ many }) => ({
+  images: many(image),
+}))
+
+export const imageRelations = relations(image, ({ one }) => ({
+  project: one(projects, {
+    fields: [image.projectId],
+    references: [projects.id],
+  }),
+}))
+
 
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {

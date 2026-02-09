@@ -20,6 +20,14 @@ export const getRouter = () => {
         </TanstackQuery.Provider>
       )
     },
+
+    defaultNotFoundComponent: () => {
+      return (
+        <div>
+          <h1>404</h1>
+        </div>
+      )
+    }
   })
 
   TanstackQuery.getContext().queryClient

@@ -1,7 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 
-import { ImageUploadField } from '@/components/shared/ImageUploadField'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -66,7 +65,6 @@ function RouteComponent() {
       slug: '',
       description: '',
       tags: [''],
-      image: '',
       published: false,
       featured: false,
     },
@@ -133,7 +131,7 @@ function RouteComponent() {
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder="Task Management System"
+                          placeholder="Task-Management-System"
                         />
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
@@ -210,7 +208,7 @@ function RouteComponent() {
                 </form.Field>
 
                 {/* Image */}
-                <form.Field name="image">
+                {/* <form.Field name="image">
                   {(field) => {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
@@ -228,7 +226,7 @@ function RouteComponent() {
                       </Field>
                     )
                   }}
-                </form.Field>
+                </form.Field> */}
                 {/* Flags */}
                 <Field>
                   <div className="flex justify-between">

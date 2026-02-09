@@ -20,8 +20,6 @@ const skillCategories = [
     skills: [
       { name: 'Node.js', desc: 'Server-side JavaScript runtime' },
       { name: 'Express.js', desc: 'Minimalist web framework' },
-      { name: 'Golang', desc: 'High-performance systems' },
-      { name: 'Spring Boot', desc: 'Enterprise Java framework' },
     ],
   },
   {

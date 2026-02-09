@@ -11,6 +11,7 @@ function RouteComponent() {
   return (
     <div className='container mx-auto flex justify-center items-center min-h-screen'>
       <ImageUpload projectId={projectId} />
+      {/* <MultiUploader/> */}
     </div>
   )
 }

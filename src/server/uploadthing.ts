@@ -1,46 +1,28 @@
-import { db } from 'db/drizzle'
-import { projects } from 'db/schema'
-import { eq } from 'drizzle-orm'
-import { auth } from 'lib/auth'
-import type { FileRouter } from 'uploadthing/server'
-import { UploadThingError, createUploadthing } from 'uploadthing/server'
-import z from 'zod'
+import { createUploadthing } from "uploadthing/server";
+import type { FileRouter } from "uploadthing/server";
 
-const f = createUploadthing()
+const f = createUploadthing();
 
+
+// FileRouter for your app, can contain multiple FileRoutes
 export const uploadRouter = {
+  // Define as many FileRoutes as you like, each with a unique routeSlug
   imageUploader: f({
     image: {
-      maxFileSize: '4MB',
+      maxFileSize: "4MB",
       maxFileCount: 1,
     },
   })
-    .input(
-      z.object({
-        projectId: z.string(),
-      }),
-    )
-    .middleware(async ({ req, input }) => {
-      console.log('Upload middleware hit')
+    // Set permissions and file types for this FileRoute
 
-      const user = await auth.api.getSession({ headers: req.headers })
-      if (!user) throw new UploadThingError('Unauthorized')
+    .onUploadComplete( ({ file }) => {
+      // This code RUNS ON YOUR SERVER after upload
 
-      return { userId: user.user.id, projectId: input.projectId }
-    })
-    .onUploadComplete(async ({ metadata, file, }) => {
-      console.log('Upload complete for userId:', metadata.userId)
-
-      console.log('file url', file.ufsUrl)
-
-      await db
-        .update(projects)
-        .set({ imageUrl: file.ufsUrl })
-        .where(eq(projects.id, metadata.projectId))
+      console.log("file url", file.ufsUrl);
 
       // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
-      return { uploadedBy: metadata.userId }
+      return { fileUrl: file.ufsUrl };
     }),
-} satisfies FileRouter
+} satisfies FileRouter;
 
-export type UploadRouter = typeof uploadRouter
+export type UploadRouter = typeof uploadRouter;

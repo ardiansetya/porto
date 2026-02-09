@@ -1,4 +1,3 @@
-import { ImageUploadField } from '@/components/shared/ImageUploadField'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -77,7 +76,6 @@ function RouteComponent() {
       slug: project?.slug || '',
       description: project?.description || '',
       tags: project?.tags || [''],
-      image: project?.imageUrl || '',
       published: project?.published || false,
       featured: project?.featured || false,
     },
@@ -244,7 +242,7 @@ function RouteComponent() {
                   )}
                 </form.Field>
 
-                {/* Image */}
+                {/* Image
                 <form.Field name="image">
                   {(field) => {
                     const isInvalid =
@@ -264,7 +262,7 @@ function RouteComponent() {
                       </Field>
                     )
                   }}
-                </form.Field>
+                </form.Field> */}
 
                 {/* Flags */}
                 <Field>

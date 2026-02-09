@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { useTRPC } from '@/integrations/trpc/react'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate, useRouter } from '@tanstack/react-router'
 import { ExternalLink, Github } from 'lucide-react'
 
 
@@ -10,6 +11,8 @@ export function ProjectsGrid() {
   const {data: projects} = useQuery({
     ...trpc.projects.list.queryOptions()
   })
+
+  const router = useRouter()
   return (
     <section className="section-padding">
       <div className="container-custom">
@@ -35,7 +38,7 @@ export function ProjectsGrid() {
               {/* Project image */}
               <div className="relative aspect-video bg-secondary overflow-hidden">
                 <img
-                  src={project.image ?? ""}
+                  src={"https://jafaqlgy31.ufs.sh/f/Q1zztTgaCfF1VCDg48wabE53htdKDcrIz21pFxegSkyqAwjn"}
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
@@ -78,6 +81,7 @@ export function ProjectsGrid() {
                     variant="default"
                     size="sm"
                     className="flex-1 group/btn"
+                    onClick={() => router.navigate({href: 'https://nowted.appwrite.network/'})}
                   >
                     <span>View Project</span>
                     <ExternalLink className="ml-1 h-3 w-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
