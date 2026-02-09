@@ -113,7 +113,7 @@ export function Hero() {
       <div className="container-custom relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Text Content */}
-          <div className="order-2 lg:order-1">
+          <div className="order-2 lg:order-1 text-center sm:text-start">
             {/* Greeting badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary text-secondary-foreground text-sm font-medium mb-6 animate-fade-in opacity-0">
               <span className="relative flex h-2 w-2">
@@ -124,7 +124,7 @@ export function Hero() {
             </div>
 
             {/* Main headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up opacity-0">
+            <h1 className="text-4xl  sm:text-5xl md:text-6xl font-bold leading-tight mb-6 animate-fade-in-up opacity-0">
               Hi, I'm{' '}
               <span className="gradient-text">Ardian Setya Pradana</span>
               <br />
@@ -138,7 +138,7 @@ export function Hero() {
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 mb-12 animate-fade-in-up opacity-0 stagger-3">
+            <div className="flex flex-wrap gap-4 mb-12 justify-center sm:justify-start  animate-fade-in-up opacity-0 stagger-3">
               <Button asChild size="lg" className="hover-lift hover-glow">
                 <Link to="/projects">
                   View Projects
@@ -159,18 +159,18 @@ export function Hero() {
             </div>
 
             {/* Infinite scrolling tech logos */}
-            <div className="animate-fade-in opacity-0 stagger-4">
+            <div className="animate-fade-in opacity-0 stagger-4 mb-4">
               <span className="text-sm text-muted-foreground mb-3 block">
                 Tech Stack
               </span>
-              <div className="relative overflow-hidden max-w-xl">
+              <div className="relative w-full text-center overflow-hidden max-w-xl">
                 <div className="absolute left-0 top-0 bottom-0 w-12 bg-linear-to-r from-background to-transparent z-10" />
                 <div className="absolute right-0 top-0 bottom-0 w-12 bg-linear-to-l from-background to-transparent z-10" />
-                <div className="flex w-max flex-nowrap gap-4 animate-marquee">
+                <div className="flex w-max  flex-nowrap gap-4 animate-marquee">
                   {[...techLogos, ...techLogos].map((tech, index) => (
                     <div
-                    key={`${tech.name}-${index}`}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/50 text-muted-foreground hover:text-foreground transition-colors duration-200 shrink-0"
+                      key={`${tech.name}-${index}`}
+                      className="flex  items-center gap-2 px-4 py-2 rounded-xl bg-secondary/50 text-muted-foreground hover:text-foreground transition-colors duration-200 shrink-0"
                     >
                       {tech.icon}
                       <span className="text-sm font-medium">{tech.name}</span>

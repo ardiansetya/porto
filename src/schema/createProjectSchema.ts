@@ -11,9 +11,10 @@ export const createProjectSchema = z.object({
     }),
   description: z.string().min(10, 'Description terlalu singkat'),
   tags: z.array(z.string().min(1).max(50)).max(15).default([]),
-  image: z.string('Image harus berupa URL valid').optional(),
   published: z.boolean().default(false),
   featured: z.boolean().default(false),
 })
 
 export type CreateProjectSchema = z.infer<typeof createProjectSchema>
+
+

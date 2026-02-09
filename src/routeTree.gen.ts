@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AppRouteRouteImport } from './routes/_app/route'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
 import { Route as AppIndexRouteImport } from './routes/_app/index'
-import { Route as ApiUploadthingRouteImport } from './routes/api/uploadthing'
 import { Route as AppProjectsIndexRouteImport } from './routes/_app/projects/index'
 import { Route as AppLoginIndexRouteImport } from './routes/_app/login/index'
 import { Route as AppContactIndexRouteImport } from './routes/_app/contact/index'
@@ -36,11 +35,6 @@ const AppIndexRoute = AppIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AppRouteRoute,
-} as any)
-const ApiUploadthingRoute = ApiUploadthingRouteImport.update({
-  id: '/api/uploadthing',
-  path: '/api/uploadthing',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const AppProjectsIndexRoute = AppProjectsIndexRouteImport.update({
   id: '/projects/',
@@ -90,7 +84,6 @@ const DashboardProjectsUploadProjectidRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/api/uploadthing': typeof ApiUploadthingRoute
   '/': typeof AppIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -104,7 +97,6 @@ export interface FileRoutesByFullPath {
   '/dashboard/projects/upload/$projectid': typeof DashboardProjectsUploadProjectidRoute
 }
 export interface FileRoutesByTo {
-  '/api/uploadthing': typeof ApiUploadthingRoute
   '/': typeof AppIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -120,7 +112,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteRouteWithChildren
-  '/api/uploadthing': typeof ApiUploadthingRoute
   '/_app/': typeof AppIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -136,7 +127,6 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/api/uploadthing'
     | '/'
     | '/dashboard'
     | '/api/auth/$'
@@ -150,7 +140,6 @@ export interface FileRouteTypes {
     | '/dashboard/projects/upload/$projectid'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/api/uploadthing'
     | '/'
     | '/dashboard'
     | '/api/auth/$'
@@ -165,7 +154,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_app'
-    | '/api/uploadthing'
     | '/_app/'
     | '/dashboard/'
     | '/api/auth/$'
@@ -181,7 +169,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AppRouteRoute: typeof AppRouteRouteWithChildren
-  ApiUploadthingRoute: typeof ApiUploadthingRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiTrpcSplatRoute: typeof ApiTrpcSplatRoute
@@ -212,13 +199,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRouteRoute
-    }
-    '/api/uploadthing': {
-      id: '/api/uploadthing'
-      path: '/api/uploadthing'
-      fullPath: '/api/uploadthing'
-      preLoaderRoute: typeof ApiUploadthingRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/_app/projects/': {
       id: '/_app/projects/'
@@ -308,7 +288,6 @@ const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AppRouteRoute: AppRouteRouteWithChildren,
-  ApiUploadthingRoute: ApiUploadthingRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiTrpcSplatRoute: ApiTrpcSplatRoute,

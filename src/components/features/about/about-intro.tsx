@@ -1,8 +1,9 @@
-import { Briefcase, GraduationCap, MapPin } from 'lucide-react'
+import { Award, Briefcase, GraduationCap, MapPin } from 'lucide-react'
 
 const badges = [
   { icon: Briefcase, label: 'Fullstack Developer' },
   { icon: GraduationCap, label: 'Informatics Undergraduate' },
+  { icon: Award, label: 'GPA 3.68 / 4.0' },
   { icon: MapPin, label: 'Indonesia' },
 ]
 
@@ -18,6 +19,7 @@ export function AboutIntro() {
                 👨‍💻
               </div>
             </div>
+
             {/* Decorative elements */}
             <div className="absolute -top-4 -right-4 w-24 h-24 border-2 border-primary/30 rounded-2xl -z-10" />
             <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-secondary rounded-2xl -z-10" />
@@ -30,18 +32,17 @@ export function AboutIntro() {
             </h1>
 
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              I'm Ardian Setya Pradana, a passionate Fullstack Developer and
-              Informatics undergraduate at Universitas Dian Nuswantoro. I
-              specialize in building modern web applications with a focus on
-              clean architecture, scalable solutions, and exceptional user
-              experiences.
+              I'm Ardian Setya Pradana, a Fullstack Developer and Informatics
+              undergraduate at Universitas Dian Nuswantoro. I focus on building
+              modern, scalable web applications with clean architecture and
+              strong attention to user experience.
             </p>
 
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              My journey in software development started with curiosity about
-              how things work on the web. Today, I work across the entire stack,
-              from designing intuitive user interfaces to architecting robust
-              backend systems and deploying containerized applications.
+              My journey in software development began with deep curiosity about
+              how digital systems operate. Today, I develop across the entire
+              stack — from crafting intuitive interfaces to designing backend
+              services and deploying containerized applications.
             </p>
 
             {/* Badges */}

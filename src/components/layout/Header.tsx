@@ -20,7 +20,7 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const location = useLocation()
 
-  const {data: user} = authClient.useSession()
+  // const {data: user} = authClient.useSession()
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass">
       <nav className="container-custom mx-auto px-12">
@@ -53,7 +53,7 @@ export default function Header() {
 
           {/* Right side */}
           <div className="flex items-center gap-4">
-            {user ? (
+            {/* {user ? (
               <Link
                 to="/dashboard"
                 className="text-sm font-medium transition-colors link-underline"
@@ -64,7 +64,7 @@ export default function Header() {
               <Button asChild>
                 <Link to="/login">Login</Link>
               </Button>
-            )}
+            )} */}
             <ModeToggle />
             {/* Mobile Menu Button */}
             <Button

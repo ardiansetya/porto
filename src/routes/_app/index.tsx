@@ -7,7 +7,6 @@ import { SkillsPreview } from '@/components/features/home/skill-preview'
 
 export const Route = createFileRoute('/_app/')({ component: App })
 
-import { UploadDemo } from '@/components/UploadDemo'
 
 function App() {
   return (

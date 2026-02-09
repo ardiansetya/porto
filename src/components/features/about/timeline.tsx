@@ -3,41 +3,42 @@ import { Award, Briefcase, GraduationCap } from 'lucide-react'
 const timelineItems = [
   {
     icon: GraduationCap,
-    date: '2021 - Present',
+    date: '2022 - Present',
     title: 'Informatics Undergraduate',
     organization: 'Universitas Dian Nuswantoro',
     description:
-      "Pursuing a Bachelor's degree in Informatics with focus on software engineering, web development, and data structures.",
+      "Pursuing a Bachelor's degree in Informatics with a strong focus on software engineering, fullstack development, system design, and modern web technologies.",
     type: 'education',
   },
   {
     icon: Briefcase,
-    date: '2023 - Present',
-    title: 'Research Assistant',
-    organization: 'University Research Lab',
+    date: '2026 - Present',
+    title: 'Freelance Fullstack Developer',
+    organization: 'Independent',
     description:
-      'Assisting in research projects focused on web technologies and mobile application development.',
-    type: 'work',
-  },
-  {
-    icon: Award,
-    date: '2022 - 2023',
-    title: 'Freelance Developer',
-    organization: 'Various Clients',
-    description:
-      'Developed custom web applications and mobile solutions for small businesses and startups.',
+      'Designing and developing end-to-end web applications, handling both frontend and backend architecture, and delivering scalable solutions for client needs.',
     type: 'work',
   },
   {
     icon: Briefcase,
-    date: '2022',
-    title: 'Web Development Internship',
-    organization: 'Tech Startup',
+    date: '2025',
+    title: 'Web Developer Intern (6 months)',
+    organization: 'Dinas Komunikasi dan Informatika Provinsi Jawa Tengah',
     description:
-      'Contributed to frontend development using React and participated in agile development processes.',
+      'Contributed to government digital initiatives by developing and enhancing web-based information systems, focusing on performance, accessibility, and maintainability.',
+    type: 'work',
+  },
+  {
+    icon: Briefcase,
+    date: '2024',
+    title: 'Wordpress Developer Intern',
+    organization: 'Pimpinan Wilayah Muhammadiyah (PWM) Jawa Tengah',
+    description:
+      'Supported the development of organizational information systems, collaborated in requirement analysis, and implemented features to improve operational efficiency.',
     type: 'work',
   },
 ]
+
 
 export function Timeline() {
   return (

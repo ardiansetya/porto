@@ -81,7 +81,7 @@ export function ProjectsGrid() {
                     variant="default"
                     size="sm"
                     className="flex-1 group/btn"
-                    onClick={() => router.navigate({href: 'https://nowted.appwrite.network/'})}
+                    onClick={() => router.navigate({href: "https://google.com" })}
                   >
                     <span>View Project</span>
                     <ExternalLink className="ml-1 h-3 w-3 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />

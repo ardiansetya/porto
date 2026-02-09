@@ -15,13 +15,13 @@ const contactInfo = [
     icon: Github,
     label: 'GitHub',
     value: 'github.com/ardiansetya',
-    href: 'https://github.com',
+    href: 'https://github.com/ardiansetya',
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
-    value: 'linkedin.com/in/ardian',
-    href: 'https://linkedin.com',
+    value: 'linkedin.com/in/ardiansetya',
+    href: 'https://www.linkedin.com/in/ardiansetya/',
   },
   {
     icon: MapPin,
