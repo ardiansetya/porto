@@ -41,7 +41,6 @@ export const image = pgTable('image', {
     .notNull(),
 })
 
-
 export const projects = pgTable('projects', {
   id: text('id').primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
@@ -123,7 +122,6 @@ export const userRelations = relations(user, ({ many }) => ({
   accounts: many(account),
 }))
 
-
 export const projectRelations = relations(projects, ({ many }) => ({
   images: many(image),
 }))
@@ -134,7 +132,6 @@ export const imageRelations = relations(image, ({ one }) => ({
     references: [projects.id],
   }),
 }))
-
 
 export const sessionRelations = relations(session, ({ one }) => ({
   user: one(user, {

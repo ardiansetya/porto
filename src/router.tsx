@@ -27,7 +27,7 @@ export const getRouter = () => {
           <h1>404</h1>
         </div>
       )
-    }
+    },
   })
 
   TanstackQuery.getContext().queryClient

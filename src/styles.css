@@ -4,11 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@import "tailwindcss";
+@import 'tailwindcss';
 
-@import "uploadthing/tw/v4";
+@import 'uploadthing/tw/v4';
 @source "../node_modules/@uploadthing/react/dist"; /** <-- depends on your project structure */
-
 
 body {
   @apply m-0;
@@ -94,7 +93,7 @@ code {
 
   --ring: oklch(0.63 0.17 264);
 
-  --blue-accent-light: oklch(0.30 0.05 264);
+  --blue-accent-light: oklch(0.3 0.05 264);
 
   --sidebar-background: oklch(0.22 0.02 260);
   --sidebar-foreground: oklch(0.96 0.01 255);
@@ -105,7 +104,6 @@ code {
   --sidebar-border: oklch(0.25 0.01 255);
   --sidebar-ring: oklch(0.63 0.17 264);
 }
-
 
 @theme inline {
   --color-background: var(--background);
@@ -155,8 +153,6 @@ code {
   }
 } */
 
-
-
 @layer base {
   * {
     @apply border-border;
@@ -173,11 +169,15 @@ code {
 @layer utilities {
   .hover-lift {
     @apply transition-all duration-300 ease-out hover:-translate-y-1;
-    &:hover { box-shadow: 0 10px 15px -3px hsl(0 0% 0% / 0.1); }
+    &:hover {
+      box-shadow: 0 10px 15px -3px hsl(0 0% 0% / 0.1);
+    }
   }
   .hover-glow {
     @apply transition-all duration-300;
-    &:hover { box-shadow: 0 0 20px hsl(var(--primary) / 0.3); }
+    &:hover {
+      box-shadow: 0 0 20px hsl(var(--primary) / 0.3);
+    }
   }
   .link-underline {
     @apply relative;
@@ -185,7 +185,9 @@ code {
       content: '';
       @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary origin-left scale-x-0 transition-transform duration-300;
     }
-    &:hover::after { @apply scale-x-100; }
+    &:hover::after {
+      @apply scale-x-100;
+    }
   }
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400;
@@ -215,7 +217,8 @@ code {
 
 /* Soft Pulse - lebih natural */
 @keyframes pulse-soft {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.45;
   }
   50% {
@@ -233,40 +236,47 @@ code {
   }
 }
 
-
 @layer utilities {
   .animate-fade-in {
     animation: fade-in-up 0.6s ease-out forwards;
     -webkit-animation: fade-in-up 0.6s ease-out forwards;
-}
-  
+  }
+
   .animate-fade-in-up {
     animation: fade-in-up 0.8s ease-out forwards;
     -webkit-animation: fade-in-up 0.8s ease-out forwards;
-}
-  
+  }
+
   .animate-pulse-soft {
     animation: pulse-soft 3s ease-in-out infinite;
     -webkit-animation: pulse-soft 3s ease-in-out infinite;
-}
-  
+  }
+
   /* Marquee animation */
   .animate-marquee {
-  animation: marquee 30s linear infinite;
-  will-change: transform;
-   backface-visibility: hidden;
-}
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
 
-  
   .animate-marquee:hover {
     animation-play-state: paused;
   }
-  
-  /* Stagger delay */
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
-}
 
+  /* Stagger delay */
+  .stagger-1 {
+    animation-delay: 0.1s;
+  }
+  .stagger-2 {
+    animation-delay: 0.2s;
+  }
+  .stagger-3 {
+    animation-delay: 0.3s;
+  }
+  .stagger-4 {
+    animation-delay: 0.4s;
+  }
+  .stagger-5 {
+    animation-delay: 0.5s;
+  }
+}

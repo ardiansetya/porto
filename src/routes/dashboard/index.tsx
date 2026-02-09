@@ -5,14 +5,22 @@ import { useTRPC } from '@/integrations/trpc/react'
 import { getUser } from '@/server/userIdFn'
 import { useQuery } from '@tanstack/react-query'
 import {
-    Link,
-    createFileRoute,
-    redirect,
-    useNavigate,
+  Link,
+  createFileRoute,
+  redirect,
+  useNavigate,
 } from '@tanstack/react-router'
 import { authClient } from 'lib/auth-client'
 import { authMiddleware } from 'lib/middleware'
-import { ExternalLink, Eye, EyeOff, Image, LogOut, Pencil, Plus } from 'lucide-react'
+import {
+  ExternalLink,
+  Eye,
+  EyeOff,
+  Image,
+  LogOut,
+  Pencil,
+  Plus,
+} from 'lucide-react'
 import { toast } from 'sonner'
 
 export const Route = createFileRoute('/dashboard/')({
@@ -41,9 +49,9 @@ function RouteComponent() {
   const navigate = useNavigate()
 
   const trpc = useTRPC()
-    const {data: projects} = useQuery({
-      ...trpc.projects.list.queryOptions()
-    })
+  const { data: projects } = useQuery({
+    ...trpc.projects.list.queryOptions(),
+  })
   return (
     <section className="min-h-[calc(100vh-5rem)] bg-background py-12">
       <div className="container-custom max-w-5xl space-y-10">
@@ -128,7 +136,7 @@ function RouteComponent() {
                     </Link>
                   </Button>
                   <Button size="icon" variant="ghost" asChild>
-                    <Link 
+                    <Link
                       to="/dashboard/projects/edit"
                       search={{ id: String(project.id) }}
                     >

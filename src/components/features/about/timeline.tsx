@@ -39,7 +39,6 @@ const timelineItems = [
   },
 ]
 
-
 export function Timeline() {
   return (
     <section className="section-padding">

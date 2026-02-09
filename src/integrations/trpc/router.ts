@@ -3,7 +3,7 @@ import { createTRPCRouter, protectedProcedure, publicProcedure } from './init'
 
 import { createProjectSchema } from '@/schema/createProjectSchema'
 import type { TRPCRouterRecord } from '@trpc/server'
-import { randomUUID } from 'crypto'
+import { randomUUID } from 'node:crypto'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 

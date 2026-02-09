@@ -96,7 +96,6 @@ const techLogos = [
       </svg>
     ),
   },
- 
 ]
 
 export function Hero() {

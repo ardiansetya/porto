@@ -1,4 +1,4 @@
-import z from "zod";
+import z from 'zod'
 
 export const createProjectSchema = z.object({
   title: z.string().min(3, 'Title minimal 3 karakter').max(255),
@@ -16,5 +16,3 @@ export const createProjectSchema = z.object({
 })
 
 export type CreateProjectSchema = z.infer<typeof createProjectSchema>
-
-
