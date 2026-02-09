@@ -49,7 +49,7 @@ export function FeaturedProjects() {
                 <div className="aspect-video bg-secondary overflow-hidden">
                   <img
                     src={
-                      project.imageUrl ??
+                      // project.slug ??
                       'https://jafaqlgy31.ufs.sh/f/Q1zztTgaCfF1VCDg48wabE53htdKDcrIz21pFxegSkyqAwjn'
                     }
                     alt={project.title}
